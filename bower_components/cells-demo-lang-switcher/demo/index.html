@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <title>Demo cells-demo-lang-switcher</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script>
+       window.Polymer = {
+         dom: 'shadow',
+         lazyRegister: true,
+         useNativeCSSProperties: true
+       };
+     </script>
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="x-demo-lang.html">
+    <link rel="import" href="../cells-demo-lang-switcher.html">
+    <link rel="import" href="css/demo-styles.html">
+
+  </head>
+  <body unresolved ontouchstart>
+
+    <h4>With default configuration</h4>
+    <demo-snippet>
+      <template>
+        <cells-demo-lang-switcher></cells-demo-lang-switcher>
+        <x-demo-lang></x-demo-lang>
+      </template>
+    </demo-snippet>
+
+    <h4>With custom label, path to locales and langs</h4>
+    <demo-snippet>
+      <template>
+        <cells-demo-lang-switcher label="Lang" locales-path="locales"
+          langs='["any","en","es"]'></cells-demo-lang-switcher>
+        <x-demo-lang></x-demo-lang>
+      </template>
+    </demo-snippet>
+
+  </body>
+</html>

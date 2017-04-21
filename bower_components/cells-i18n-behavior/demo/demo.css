@@ -1,0 +1,56 @@
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #f0f0f0;
+}
+paper-tabs {
+  box-shadow: 0 1px 1px rgba(0,0,0,.4);
+  background: #fff;
+}
+/* iphone 6 viewport */
+.frame {
+  width: 375px;
+  height: 627px;
+  outline: 1px solid #D7D7D7;
+  margin: 40px auto 10px;
+  overflow: hidden;
+  position: relative;
+  background-color: #fff;
+}
+.frame-legend {
+  text-align: center;
+  color: #8A8A8A;
+  font-size: .88rem;
+}
+.lang-selector {
+  margin: 2rem;
+}
+.lang-selector select {
+  font-family: inherit;
+  font-size: 1rem;
+  min-width: 60px;
+
+}
+.controls {
+  position: absolute;
+  width: 100%;
+}
+.controls button {
+  position: relative;
+  margin: 10px auto;
+  display: block;
+  padding: 10px;
+}
+p {
+  text-align: center;
+  padding: 10px;
+}
+input {
+  font-size: 1rem;
+  padding: 10px;
+  width: 300px;
+}

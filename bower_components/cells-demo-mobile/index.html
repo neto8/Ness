@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" name="viewport">
+    <title>cells-demo-mobile Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../polymer/polymer.html">
+    <link rel="import" href="../../cells-molecule-checkbox/cells-molecule-checkbox.html">
+    <link rel="import" href="../../cells-icons/cells-icons.html">
+    <link rel="import" href="../cells-demo-mobile.html">
+
+    <style is="custom-style">
+      html, body{
+        height: 100%;
+      }
+      body {
+        margin: 0;
+      }
+      cells-demo-mobile div {
+        padding-top: 17px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+
+  <cells-demo-mobile selected-skin="iphone6" selected-orientation="portrait">
+    <div>
+      <cells-molecule-checkbox>Todo</cells-molecule-checkbox>
+      <cells-molecule-checkbox checked>Done</cells-molecule-checkbox>
+    </div>
+  </cells-demo-mobile>
+
+  </body>
+</html>

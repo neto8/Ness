@@ -1,0 +1,111 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-media-query/iron-media-query.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="cells-demo-mobile-styles.html">
+
+<!--
+
+`<cells-demo-mobile>` is a device shell to showcase a component with different screen layouts and orientations.
+
+Wrap the component to be showcased with `<cells-demo-mobile>`:
+
+```html
+<cells-demo-mobile selected-skin="nexus5" selected-orientation="portrait">
+  <molecule-checkbox>Label</molecule-checkbox>
+</cells-demo-mobile>
+```
+
+Use `shell-at-min-width` attribute to show the device shell at specific screen width:
+
+```html
+<cells-demo-mobile shell-at-min-width="601">
+  <molecule-checkbox>Label</molecule-checkbox>
+</cells-demo-mobile>
+```
+___Warning:___
+By default this value is 769px so the device shell will be hidden in screens that are smaller than that value.
+__Hence, you migth want to hide some elements of your demo that are not part of your component itself__, such as lang-selector or tabs for choosing among different mocks.
+To do that, add the class `hidden-mobile` to those elements. This class should be defined in your demo css if you have create the component with modern versions of cells-generator, in any case it looks like:
+
+```css
+‌‌ @media (max-width: 768px) {
+  .hidden-mobile {
+    display: none !important;
+  }
+ }
+```
+
+So add it if needed. If your component doesn't collide with those elements you might not have to hide anything.
+
+Available screens:
+- Nexus 5
+- Iphone 6
+- Iphone 6 plus
+- Iphone 5S
+- Ipad Mini
+- Iphone 4S
+- Lumia 920
+- Samsung Galaxy S5
+- HTC One
+- MacBook Pro
+
+Available orientations:
+- Portrait
+- Landscape
+
+## Styling
+
+The following custom properties and mixins are available for styling:
+
+| Custom property | Description     | Default        |
+|:---------------:|:---------------:| :-------------:|
+| --cells-demo-mobile-screen  | empty mixin for .screen section     | {}             |
+| --cells-demo-mobile  | empty mixin     | {}             |
+
+@demo demo/index.html
+@hero cells-demo-mobile.jpg
+-->
+<dom-module id="cells-demo-mobile">
+  <template>
+    <style include="cells-demo-mobile-styles"></style>
+
+    <iron-media-query query="(min-width: {{shellAtMinWidth}}px)" query-matches="{{showShell}}" on-query-matches-changed="_toggleMobileVisibilityClass"></iron-media-query>
+    <div class="selectors" hidden$="{{!showShell}}">
+      <paper-dropdown-menu label="Select device:" id="skin" placeholder="{{selectedSkin}}" noink no-animations horizontal-align="left" vertical-align="bottom" dynamic-align>
+        <paper-listbox class="dropdown-content" selected="{{selectedDeviceValue}}" attr-for-selected="value" id="select-skin" on-iron-select="onDropdownChanged">
+          <template is="dom-repeat" items="[[devices]]" as="device">
+            <paper-item value="[[device.value]]">[[device.name]]</paper-item>
+          </template>
+        </paper-listbox>
+      </paper-dropdown-menu>
+
+      <paper-dropdown-menu label="Select orientation:" id="select-orientation" placeholder="{{selectedOrientation}}" noink no-animations horizontal-align="left" vertical-align="bottom" dynamic-align>
+        <paper-listbox class="dropdown-content" selected="{{selectedDeviceValue}}" attr-for-selected="value" id="orientation" on-iron-select="onDropdownChanged">
+          <template is="dom-repeat" items="[[orientations]]" as="orientation">
+            <paper-item value="[[orientation.value]]">[[orientation.name]]</paper-item>
+          </template>
+        </paper-listbox>
+      </paper-dropdown-menu>
+    </div>
+
+
+    <div class="wrapper js-mobile-unstyled" id="wrapper">
+      <div class="marvel-device js-mobile-unstyled" id="device">
+        <div class="top-bar"></div>
+        <div class="sleep"></div>
+        <div class="volume"></div>
+        <div class="camera"></div>
+        <div class="sensor"></div>
+        <div class="speaker"></div>
+        <div class="screen">
+          <content></content>
+        </div>
+        <div class="home"></div>
+        <div class="bottom-bar"></div>
+      </div>
+    </div>
+  </template>
+  <script src="cells-demo-mobile.js"></script>
+</dom-module>

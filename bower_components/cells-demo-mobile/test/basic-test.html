@@ -1,0 +1,142 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <!-- Step 1: import the element to test -->
+    <link rel="import" href="../cells-demo-mobile.html">
+  </head>
+  <body>
+
+    <!-- You can use the document as a place to set up your fixtures. -->
+    <cells-demo-mobile id="myEl"></cells-demo-mobile>
+
+    <script>
+    suite('<cells-demo-mobile> tag', function() {
+      var myEl;
+
+      suiteSetup(function() {
+        myEl = document.querySelector('#myEl');
+      });
+
+      suiteTeardown(function() {
+        myEl.remove();
+      });
+
+      suite('parameter tests', function() {
+        test('should be in document', function() {
+          expect(myEl).not.to.be.undefined;
+        });
+
+        test('should have selectedSkin property', function() {
+          expect(myEl.properties).to.have.property('selectedSkin').that.is.an('Object');
+        });
+
+        test('should have selectedOrientation property', function() {
+          expect(myEl.properties).to.have.property('selectedOrientation').that.is.an('Object');
+        });
+      });
+
+      suite('functional tests', function() {
+        suite('_selectedSkinChanged', function() {
+          test('iphone 6 must be the selected skin', function() {
+            assert.isFunction(myEl._selectedSkinChanged);
+
+            myEl._selectedSkinChanged('iphone6');
+            expect(myEl.selectedSkin).to.equal('iphone6');
+          });
+
+          test('selected skin returns last valid value although empty string passed', function() {
+            assert.isFunction(myEl._selectedSkinChanged);
+
+            myEl._selectedSkinChanged('ipad');
+            myEl._selectedSkinChanged('');
+            expect(myEl.selectedSkin).to.equal('ipad');
+          });
+        });
+
+        suite('_selectedOrientationChanged', function() {
+          test('should be a function', function() {
+            assert.isFunction(myEl._selectedOrientationChanged);
+          });
+
+          test('landscape must be the selected orientation', function() {
+            myEl._selectedOrientationChanged('landscape');
+            expect(myEl.selectedOrientation).to.equal('landscape');
+          });
+
+          test('selected orientation returns last valid value although empty string passed', function() {
+            myEl._selectedOrientationChanged('portrait');
+            myEl._selectedOrientationChanged('');
+            expect(myEl.selectedOrientation).to.equal('portrait');
+          });
+        });
+
+        suite('onDropdownChanged', function() {
+          var onDropdownChangedSpy;
+          var onDropdownChangedSecCopy;
+
+          var _selectedSkinChangedSpy;
+          var _selectedSkinChangedSecCopy;
+
+          var _selectedOrientationChangedSpy;
+          var _selectedOrientationChangedSecCopy;
+
+          setup(function() {
+            onDropdownChangedSecCopy = myEl.onDropdownChanged;
+            onDropdownChangedSpy = sinon.spy(myEl, 'onDropdownChanged'); //onDropdownChanged still do its job
+            myEl.onDropdownChanged = onDropdownChangedSpy;
+
+            _selectedSkinChangedSecCopy = myEl._selectedSkinChanged;
+            _selectedSkinChangedSpy = sinon.spy();
+            myEl._selectedSkinChanged = _selectedSkinChangedSpy;
+
+            _selectedOrientationChangedSecCopy = myEl._selectedOrientationChanged;
+            _selectedOrientationChangedSpy = sinon.spy();
+            myEl._selectedOrientationChanged = _selectedOrientationChangedSpy;
+          });
+
+          teardown(function() {
+            myEl.onDropdownChanged = onDropdownChangedSecCopy;
+            myEl._selectedSkinChanged = _selectedSkinChangedSecCopy;
+            myEl._selectedOrientationChanged = _selectedOrientationChangedSecCopy;
+          });
+
+          test('should be a Function', function() {
+            assert.isFunction(myEl.onDropdownChanged);
+          });
+
+          test('should be triggered by on-iron-select event', function() {
+            var selector = Polymer.dom(myEl.root).querySelector('#select-skin');
+            if ('createEvent' in document) {
+              var evt = document.createEvent('HTMLEvents');
+              evt.initEvent('iron-select', false, true);
+              selector.dispatchEvent(evt);
+            } else {
+              selector.dispatchEvent(evt);
+            }
+            expect(onDropdownChangedSpy).to.have.been.called.once;
+          });
+
+          test('should call _selectedSkinChanged with skin selector as target of event', function() {
+            var evTarget = { target: { id: 'select-skin' } };
+            myEl.onDropdownChanged(evTarget);
+            expect(_selectedSkinChangedSpy).to.have.been.called.once;
+          });
+
+          test('should call _selectedOrientationChanged with orientation selector as target of event', function() {
+            var evTarget = { target: { id: 'select-orientation' } };
+            myEl.onDropdownChanged(evTarget);
+            expect(_selectedOrientationChangedSpy).to.have.been.called.once;
+          });
+        });
+      });
+    });
+    </script>
+  </body>
+</html>

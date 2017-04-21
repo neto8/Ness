@@ -1,0 +1,8 @@
+{
+  "hola": "Hola soy un mensaje en Español.",
+  "prueba1": "Mensaje de prueba 1.",
+  "placeholderText": "Texto de ejemplo en placeholder.",
+  "prueba2": "Texto traducido en attached.",
+  "explicitText": "texto ${interpolated}",
+  "arrayText": ["TextArray 1 + ", "TextArray 2"]
+}

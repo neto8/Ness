@@ -1,0 +1,147 @@
+$base-font-size:      16px;
+//*---------------
+// Convert pixels to ems
+// eg. for a relational value of 12px write em(12px) when the parent is 16px
+// if the parent is another value say 24px write em(12px, 24px)
+@function em($font-size, $context:$base-font-size) {
+  @return ($font-size / $context) * 1em;
+}
+//*---------------
+//*---------------
+// Convert pixels to rems
+// eg. for a relational value of 12px write rem(12px)
+// Assumes $base-font-size is the font-size of <html>
+//*---------------
+@function rem($font-size) {
+  @return ($font-size / $base-font-size) * 1rem;
+}
+
+//*---------------
+//Convert font-size pixel to rem and fallback version px
+// @include font-size(12px);
+//*---------------
+@mixin font-size($font-size, $line-height: false) {
+    font-size: $font-size;
+    font-size: $font-size / $base-font-size * 1rem;
+    @if $line-height == true {
+        line-height: ceil($font-size / $base-line-height) * $base-line-height / $font-size;
+    }
+    @if $line-height == normal {
+        line-height: normal;
+    }
+}
+
+//*---------------
+//Convert margin-top pixel to rem and fallback version px
+// @include margin-top(12px);
+//*---------------
+@mixin margin-top($margin-top: 0) {
+    margin-top: $margin-top;
+    margin-top: $margin-top / $base-font-size + rem;
+}
+
+//*---------------
+//Convert margin-bottom pixel to rem and fallback version px
+// @include margin-bottom(12px);
+//*---------------
+@mixin margin-bottom($margin-bottom: 0) {
+    margin-bottom: $margin-bottom;
+    margin-bottom: $margin-bottom / $base-font-size + rem;
+}
+
+//*---------------
+//Convert 'margin-top and margin-bottom' pixel to rem and fallback version px
+// @include margin(12px);
+// @include margin(12px,24px);
+//*---------------
+@mixin margin($margin: 0, $marginb: $margin) {
+    margin: $margin 0 $marginb 0;
+    margin: $margin / $base-font-size + rem 0 $marginb / $base-font-size + rem 0;
+}
+
+//*---------------
+// Clear inner floats
+//*---------------
+@mixin clearfix {
+    &:after {
+        clear: both;
+        content: "";
+        display: table;
+    }
+}
+
+//*---------------
+// Hide element while making it readable for screen readers
+// Shamelessly borrowed from HTML5Boilerplate:
+// https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css#L119-L133
+//*---------------
+@mixin visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+//*---------------
+// Sizing shortcuts
+//----------------*/
+@mixin size($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin square($size) {
+    @include size($size, $size);
+}
+
+//*---------------
+// Ellipsis on overflow
+//----------------*/
+@mixin ellipsis{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+//*---------------
+// Reset for list elements
+// Must be applied to <ul> or <ol> elements
+//
+// Usage:
+// ul { @include list-unstyled; }
+//----------------*/
+@mixin list-unstyled {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+//*---------------
+// Reset margin and padding to the elements passed as param
+//
+// Usage:
+// @include reset(h1, h2, p, "ul.my-class");
+//----------------*/
+@mixin reset($elements...) {
+  %reset { margin: 0; padding: 0; }
+  @each $element in $elements {
+    #{$element} {
+      @extend %reset;
+    }
+  }
+}
+
+//*---------------
+// Resets user-select: none to its initial value
+// user-select: none; is applyed to the body in the app styles
+// 
+// Usage:
+// .my-element { @include reset-user-select; }
+//----------------*/
+@mixin reset-user-select {
+  user-select: initial;
+}

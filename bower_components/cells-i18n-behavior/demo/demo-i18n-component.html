@@ -1,0 +1,44 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../cells-i18n-behavior.html">
+
+<dom-module id="demo-i18n-component">
+  <template>
+    <p>{{ doTranslation('hola') }}</p>
+    <p>{{ t('prueba1') }}</p>
+    <p>{{ t('missingKeyWithNoMeaning', 'Fallback string in a fixed language in case your missing key has no real meaning' )}}</p>
+    <p>{{ t('missingKey') }}</p>
+    <p><input type="text" placeholder="{{t('placeholderText')}}"></p>
+    <p>{{ readyTranslation }}</p>
+    <p>{{ explicitInterpolatedText }}</p>
+    <p>{{ t('explicitText', '', '{"interpolated": "interpolado"}') }}</p>
+    <p>{{ t('arrayText') }}</p>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'demo-i18n-component',
+
+    behaviors: [
+      CellsBehaviors.i18nBehavior
+    ],
+
+    properties: {
+      readyTranslation: {
+        type: String,
+        notify: true
+      },
+      explicitInterpolatedText: {
+        type: String,
+        notify: true
+      }
+    },
+
+    attached: function() {
+      this.getMsg().then(function() {
+        this.readyTranslation = this.t('prueba2');
+        this.explicitInterpolatedText = this.t('explicitText', '', {interpolated: 'interpolado'});
+      }.bind(this));
+    }
+  });
+</script>

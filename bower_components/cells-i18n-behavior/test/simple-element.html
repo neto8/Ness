@@ -1,0 +1,16 @@
+<link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../cells-i18n-behavior.html">
+
+<script>
+  Polymer({
+    is: 'simple-element',
+    behaviors: [
+      CellsBehaviors.i18nBehavior
+    ],
+    attached: function() {
+      this.getMsg().then(function() {
+        this.readyTranslation = this.t('simple-element-warn');
+      }.bind(this));
+    }
+  });
+</script>

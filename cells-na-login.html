@@ -1,0 +1,51 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../cells-i18n-behavior/cells-i18n-behavior.html">
+<link rel="import" href="cells-na-login-styles.html">
+
+
+
+<link rel="import" href="../polymerfire/polymerfire.html">
+
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<!--
+`<cells-na-login>` description.
+
+Example:
+
+```html
+<cells-na-login></cells-na-login>
+```
+
+## Styling
+
+The following custom properties and mixins are available for styling:
+
+| Custom property | Description     | Default        |
+|:----------------|:----------------|:--------------:|
+| --cells-na-login  | empty mixin     | {}             |
+
+@demo demo/index.html
+-->
+<!--<dom-module id="cells-na-login">
+  <template>
+    <style include="cells-na-login-styles cells-na-login-shared-styles"></style>
+    <content></content>
+  </template>
+  <script src="cells-na-login.js"></script>
+</dom-module>-->
+
+<dom-module id="cells-na-login">
+  <template>
+   
+  	<style include="cells-na-login-styles"></style>
+   
+    <paper-button on-tap="signIn" disabled="[[disabled]]">
+      <iron-icon icon="account-circle"></iron-icon>
+      <span>Logueate compa</span>
+    </paper-button>
+  </template>
+   <script src="cells-na-login.js"></script>
+</dom-module>

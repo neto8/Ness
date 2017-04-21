@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+    <link rel="import" href="../../cells-i18n-behavior/cells-i18n-behavior.html">
+    <link rel="import" href="../cells-demo-lang-switcher.html">
+  </head>
+  <body>
+
+    <test-fixture id="default">
+      <template>
+        <cells-demo-lang-switcher></cells-demo-lang-switcher>
+      </template>
+    </test-fixture>
+
+    <script>
+      suite('<cells-demo-lang-switcher>', function() {
+        var el;
+
+        setup(function() {
+          el = fixture('default');
+        });
+
+        test('setting localesPath sets I18nMsg.url', function() {
+          el.localesPath = 'any';
+          assert.equal(I18nMsg.url, 'any/');
+        });
+
+        suite('Changing lang', function() {
+          var select;
+
+          setup(function() {
+            select = el.$$('paper-listbox');
+          });
+
+          teardown(function() {
+            select.selected = 0;
+          });
+
+          test('sets the lang attribute of the ownerDocument', function() {
+            var initialLang = el.ownerDocument.lang;
+            select.selected = 1;
+            assert.notEqual(initialLang, el.ownerDocument.lang);
+          });
+
+          test('sets I18nMsg.lang', function() {
+            var initialLang = I18nMsg.lang;
+            select.selected = 1;
+            assert.notEqual(initialLang, I18nMsg.lang);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

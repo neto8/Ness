@@ -1,0 +1,18 @@
+{
+  "hola": {
+    "message": "Hello, I'm an English message."
+  },
+  "prueba1": {
+    "message": "Test message 1."
+  },
+  "placeholderText": {
+    "message": "Example text in placeholder."
+  },
+  "prueba2": {
+    "message": "Text translated in attached."
+  },
+  "explicitText": {
+    "message": "${interpolated} text"
+  },
+  "arrayText": ["TextArray 1 + ", "TextArray 2"]
+}

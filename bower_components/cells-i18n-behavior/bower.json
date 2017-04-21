@@ -1,0 +1,21 @@
+{
+	"name": "cells-i18n-behavior",
+	"description": "Translates strings",
+	"version": "3.3.0",
+	"keywords": [
+		"behavior",
+		"i18n",
+		"translate"
+	],
+	"dependencies": {
+		"polymer": "Polymer/polymer#^1.5.0"
+	},
+	"main": [
+		"cells-i18n-behavior.html"
+	],
+	"devDependencies": {
+		"iron-component-page": "PolymerElements/iron-component-page#~1.1.4",
+		"test-fixture": "PolymerElements/test-fixture#^1.0.0",
+		"web-component-tester": "Polymer/web-component-tester#~4.2.2"
+	}
+}

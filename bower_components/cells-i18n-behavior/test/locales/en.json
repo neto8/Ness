@@ -1,0 +1,7 @@
+{
+  "simple-element-info": "Information",
+  "simple-element-cancel": "Cancel",
+  "simple-element-warn": "Warn",
+  "simple-element-interpolated": "${interpolated} text",
+  "simple-element-array-text": ["Text1 + ", "Text2"]
+}

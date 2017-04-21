@@ -1,0 +1,408 @@
+@import 'normalize';
+@import 'mixins';
+
+body{
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  text-align: center;
+  color: #1e1e1e;
+}
+
+html, body {
+  height: 100%;
+}
+
+.cf:before,
+.cf:after {
+  content: " ";
+  display: table;
+}
+
+.cf:after {
+  clear: both;
+}
+
+.cf {
+  *zoom: 1;
+}
+
+.marvel-device, .marvel-device div, *:before, *:after {
+  -webkit-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1);
+  -webkit-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
+  -moz-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
+  -o-transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
+  transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275);
+}
+
+a{
+  cursor: pointer;
+  color: #36a6ff;
+  @include transition(color, 300ms, ease-in-out);
+}
+
+header {
+  padding: 150px 0;
+  line-height: 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+footer{
+  padding: 48px 0;
+  line-height: 24px;
+}
+
+h1{
+  font-size: 24px;
+  font-weight: bold;
+}
+
+header h1 {
+  margin-bottom: 30px;
+  font-size: 33px;
+  line-height: 1.2;
+}
+
+header span, header a {
+  vertical-align: top;
+}
+
+header .wrap{
+  width: 500px;
+  margin: 0 auto;
+}
+
+section {
+  background: #1e1e1e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  height: 100%;
+  display: table;
+  position: relative;
+}
+
+section h1 {
+  position: absolute;
+  width: 100%;
+  top: 60px;
+  left: 0;
+
+  &.new{
+    &:before{
+      content: 'NEW';
+      background: #FF703F;
+      padding: 0 6px;
+      line-height: 24px;
+      vertical-align: top;
+      color: white;
+      font-size: 14px;
+      @include border-radius(2px);
+      margin-right: 10px;
+      display: inline-block;
+    }
+  }
+}
+
+section.white, #s5.black, #lumia920.white, #lumia920.black {
+  background: #1e1e1e;
+}
+
+#s5.white, #s5.white .select-landscape {
+  color: black;
+}
+
+section.black h1, section.white, section.black .select-landscape, section.white .select-landscape {
+  color: white;
+}
+
+section.gold, section.silver, section.blue, section.red, section.yellow, section.green, #nexus5, #lumia920, #s5, #htc-one {
+  background: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+section .wrap {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  padding: 200px 0;
+}
+
+p{
+  margin-bottom: 15px;
+
+  span{
+    font-weight: bold;
+  }
+
+  &:last-of-type{
+    margin-bottom: 0;
+  }
+}
+
+.overlay{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  top: 0;
+  z-index: 11111;
+  @include transition(all, 0.2s, ease-in-out);
+  left: 0;
+  background: rgba(255, 255, 255, 0.9);
+
+  &.activated{
+    opacity: 1;
+    visibility: visible;
+
+    .modal{
+      -moz-transform: none;
+      -webkit-transform: none;
+      -o-transform: none;
+      -ms-transform: none;
+      transform: none;
+      -webkit-transition: all 300ms cubic-bezier(0.105, 0.795, 0.305, 1);
+      -webkit-transition: all 300ms cubic-bezier(0.105, 0.795, 0.305, 1.335);
+      -moz-transition: all 300ms cubic-bezier(0.105, 0.795, 0.305, 1.335);
+      -o-transition: all 300ms cubic-bezier(0.105, 0.795, 0.305, 1.335);
+      transition: all 300ms cubic-bezier(0.105, 0.795, 0.305, 1.335);
+    }
+  }
+
+  .table{
+    display: table;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    .cell{
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
+
+  .modal{
+    width: 566px;
+    text-align: left;
+    margin: 0 auto;
+    -moz-transform: scale(0.6) translateY(30px);
+    -webkit-transform: scale(0.6) translateY(30px);
+    -o-transform: scale(0.6) translateY(30px);
+    -ms-transform: scale(0.6) translateY(30px);
+    transform: scale(0.6) translateY(30px);
+    -webkit-transition: all 100ms cubic-bezier(0.000, 0.000, 0.580, 1.000);
+    -moz-transition: all 100ms cubic-bezier(0.000, 0.000, 0.580, 1.000);
+    -o-transition: all 100ms cubic-bezier(0.000, 0.000, 0.580, 1.000);
+    transition: all 100ms cubic-bezier(0.000, 0.000, 0.580, 1.000);
+
+    p{
+      line-height: 1.8;
+
+      &:last-of-type{
+        margin-bottom: 30px;
+      }
+    }
+  }
+}
+
+hr{
+  outline: none;
+  border: none;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 30px auto;
+  width: 50%;
+}
+
+.twitter-share-button{
+  display: block;
+  margin: 30px auto 0 auto;
+}
+
+.button{
+  line-height: 48px;
+  text-decoration: none;
+  @include border-radius(4px);
+  background: #ADADAD;
+  color: white;
+  padding: 0 20px;
+  font-weight: bold;
+  letter-spacing: 0px;
+  // text-transform: uppercase;
+  margin: 0 12px;
+  @include transition(all, 0.3s, ease-in-out);
+  display: inline-block;
+
+  &:hover{
+    color: white;
+    background: darken(#ADADAD, 10%);
+  }
+
+  &.download{
+    background: #36a6ff;
+
+    &:hover{
+      color: white;
+      background: darken(#36a6ff, 10%);
+    }
+  }
+}
+
+.selector {
+  width: 100%;
+  text-align: center;
+  display: block;
+  position: absolute;
+  top: 120px;
+  @include no-touch;
+}
+
+.grab{
+  position: absolute;
+  left: 50%;
+  margin-left: -70px;
+  margin-right: 0;
+  width: 100%;
+  bottom: 100px;
+  width: 100px;
+  cursor: pointer;
+}
+
+.selector li {
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+  display: inline-block;
+  text-indent: -9999px;
+  @include border-radius(30px);
+  line-height: 30px;
+  cursor: pointer;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  -moz-transform: scale(0.6);
+  -webkit-transform: scale(0.6);
+  -o-transform: scale(0.6);
+  -ms-transform: scale(0.6);
+  transform: scale(0.6);
+  opacity: 0.6;
+}
+
+.select-black {
+  background: #2c2b2c;
+}
+
+.select-silver {
+  background: #f0f0f0;
+}
+
+.select-gold {
+  background: #f1e2d0;
+}
+
+.select-white, #s5 .select-white, #s5 .select-white.selected {
+  background: white;
+  -webkit-box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.3);
+}
+
+.select-white.selected {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.select-red {
+  background: #f96b6c;
+}
+
+.select-yellow {
+  background: #f2dc60;
+}
+
+.select-green {
+  background: #97e563;
+}
+
+.select-blue {
+  background: #33a2db;
+}
+
+.select-landscape {
+  text-indent: 0px !important;
+  width: 100px !important;
+  color: #1e1e1e;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 600;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  letter-spacing: 2px;
+  padding: 0 10px;
+}
+
+.selector li:hover {
+  opacity: 1;
+}
+
+.selector li.selected {
+  -webkit-transition: all 500ms cubic-bezier(0.680, 0, 0.265, 1);
+  -webkit-transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550);
+  -moz-transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550);
+  -o-transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550);
+  transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550);
+  -moz-transform: scale(1);
+  -webkit-transform: scale(1);
+  -o-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  opacity: 1;
+}
+
+.marvel-device{
+  vertical-align: top;
+}
+
+.marvel-device .screen{
+  text-align: left;
+  /*text-indent: -9999px;*/
+}
+
+.side{
+  width: 360px;
+  display: inline-block;
+  text-align: left;
+  vertical-align: top;
+  margin-left: 30px;
+}
+
+code{
+  font-family: monospace;
+  font-size: 14px;
+  padding: 20px !important;
+  font-weight: bold;
+  @include border-radius(4px);
+}
+
+.devices{
+  font-family: monospace;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.iphone4s, .iphone5s, .iphone5c, .iphone6, .iphone6plus, .nexus5, .ipad, .lumia920, .s5, .htc-one, .macbook{
+  .screen{
+    background: #fff;
+    @apply(--cells-demo-mobile-screen);
+  }
+}
+
+.nexus5, .s5{
+  .screen {
+    box-shadow: none;
+  }
+}

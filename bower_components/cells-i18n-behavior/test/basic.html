@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="UTF-8">
+  <title>cells-i18n-behavior basic tests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <script src="../../webcomponentsjs/webcomponents.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../test-fixture/test-fixture-mocha.js"></script>
+  <script src="mock-locales.js"></script>
+  <link href="../../test-fixture/test-fixture.html" rel="import">
+  <link rel="import" href="../../polymer/polymer.html">
+  <link rel="import" href="../cells-i18n-behavior.html">
+  <link rel="import" href="simple-element.html">
+</head>
+<body>
+  <test-fixture id="basic">
+    <template>
+      <simple-element></simple-element>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="async">
+    <template>
+      <simple-element></simple-element>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="attached">
+    <template>
+      <simple-element></simple-element>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="i18">
+    <template>
+      <simple-element></simple-element>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="array">
+    <template>
+      <simple-element></simple-element>
+    </template>
+  </test-fixture>
+
+  <script>
+  describe('an element with i18nBehavior', function() {
+    var e;
+    var a;
+    var ched;
+    var i18;
+    var vector;
+
+    before(function() {
+      e = fixture('basic');
+      a = fixture('async');
+      ched = fixture('attached');
+      i18 = fixture('i18');
+      vector = fixture('array');
+    });
+
+    it('expects to have lang property', function() {
+      expect(e.properties).to.have.lang;
+      window.I18nMsg.lang = 'es';
+      e.updateTranslation();
+      expect(e.lang).to.be.an('String');
+    });
+
+    it('expects to have hasI18n property', function() {
+      flush(function() {
+        expect(e.properties).to.have.hasI18n;
+        expect(e.hasI18n).to.be.a('Boolean');
+        expect(e.hasI18n).to.be.true;
+      });
+    });
+
+    describe('on attached', function() {
+      var getMsgSrc;
+
+      before(function(){
+        var promiseFunction = function() {
+          return new Promise(function(resolve, reject) {
+            resolve({result: true});
+          });
+        };
+        getMsgSrc = ched.getMsg;
+        ched.getMsg = sinon.spy(promiseFunction);
+      });
+
+      after(function(){
+        ched.getMsg = getMsgSrc;
+      });
+
+      it('should call asynchronous getMsg', function(done) {
+        ched.attached();
+        flush(function() {
+          expect(ched.getMsg).to.have.been.called.once;
+          done();
+        });
+      });
+    });
+
+    describe('updateTranslation', function() {
+      it('should have updateTranslation function', function() {
+        expect(e).to.have.property('updateTranslation');
+        expect(e.updateTranslation).to.be.a('Function');
+      });
+    });
+
+    describe('getTranslation', function() {
+      it('should have getTranslation function', function() {
+        expect(e).to.have.property('getTranslation');
+        expect(e.getTranslation).to.be.a('Function');
+      });
+
+      it('should return message for given msgId', function(done) {
+        window.I18nMsg.lang = 'es';
+        e.getTranslation('simple-element-cancel');
+
+        flush(function() {
+          var cancelESmsg = e.getTranslation('simple-element-cancel');
+          expect(cancelESmsg).to.be.equal('Cancelar');
+          done();
+        });
+
+      });
+
+      it('should return message for interpolated msgId string', function(done) {
+        window.I18nMsg.lang = 'es';
+        e.getTranslation('simple-element-interpolated', {interpolated: 'interpolado'});
+
+        flush(function() {
+          var interpolatedESmsg = e.getTranslation('simple-element-interpolated', {interpolated: 'interpolado'});
+          expect(interpolatedESmsg).to.be.equal('texto interpolado');
+          done();
+        });
+
+      });
+
+      it ('should return message for array', function() {
+        window.I18nMsg.lang = 'es';
+        expect(e.getTranslation('simple-element-array-text')).to.be.equal('Text1 + Text2');
+      });
+    });
+
+    describe('doTranslation', function() {
+      var doneFn;
+      before(function(done){
+        doneFn = function(){
+          done();
+        };
+        // wait for language ready to use doTranslation
+        document.addEventListener('i18n-language-ready', doneFn);
+        window.I18nMsg.lang = 'en';
+      });
+
+      after(function(){
+        document.removeEventListener('i18n-language-ready', doneFn);
+      });
+
+      it('should have doTranslation function', function() {
+        expect(e).to.have.property('doTranslation');
+        expect(e.doTranslation).to.be.a('Function');
+      });
+
+      it('should return translation of msgId', function() {
+        var infoENmsg = e.doTranslation('simple-element-info');
+        expect(infoENmsg).to.be.equal('Information');
+      });
+
+      it('should return translation of interpolated msgId', function() {
+        var interpolatedENmsg = e.doTranslation('simple-element-interpolated', '', {interpolated: 'interpolated'});
+        expect(interpolatedENmsg).to.be.equal('interpolated text');
+      });
+
+      it('should return fallback if msgId is not found', function() {
+        var alertENfallback = e.doTranslation('simple-element-alert');
+        expect(alertENfallback).to.be.equal('simple-element-alert');
+      });
+
+      it('should return custom fallback if msgId is not found', function() {
+        var alertENcustomFallback = e.doTranslation('simple-element-alert', 'Alert!', 'en');
+        expect(alertENcustomFallback).to.be.equal('Alert!');
+      });
+    });
+
+    describe('t (doTranslation alias)', function() {
+      it('should have t function', function() {
+        expect(e).to.have.property('t');
+        expect(e.t).to.be.a('Function');
+      });
+
+      it('should return translation of msgId', function() {
+        window.I18nMsg.lang = 'es';
+        var cancelESmsg = e.t('simple-element-cancel');
+        expect(cancelESmsg).to.be.equal('Cancelar');
+      });
+
+      it('should return translation of interpolated msgId', function() {
+        window.I18nMsg.lang = 'en';
+        var infoENmsg = e.t('simple-element-interpolated', 'aa', {interpolated: 'interpolated'});
+        expect(infoENmsg).to.be.equal('interpolated text');
+      });
+
+      it('should return fallback if msgId is not found', function() {
+        var alertENfallback = e.t('simple-element-alert');
+        expect(alertENfallback).to.be.equal('simple-element-alert');
+      });
+
+      it('should return custom fallback if msgId is not found', function() {
+        var alertENcustomFallback = e.t('simple-element-alert', 'Alert!', 'en');
+        expect(alertENcustomFallback).to.be.equal('Alert!');
+      });
+    });
+
+    describe('getMsg', function() {
+      it('should have getMsg function', function() {
+        expect(e).to.have.property('getMsg');
+        expect(e.getMsg).to.be.a('Function');
+      });
+
+      it('should call once getAsyncTranslation', function() {
+        var promiseFunction = function() {
+          return new Promise(function(resolve, reject) {
+            resolve({result: true});
+          });
+        };
+
+        var getAsyncTranslationSpy = sinon.spy(promiseFunction);
+        e.getAsyncTranslation = getAsyncTranslationSpy;
+        e.getMsg('simple-element-cancel');
+
+        //flush(function() {
+          expect(e.getAsyncTranslation).to.have.been.calledWith('simple-element-cancel').once;
+        //});
+      });
+    });
+
+    describe('getAsyncTranslation', function() {
+      var getTranslationSrc;
+      before(function(){
+        getTranslationSrc = a.getTranslation;
+        a.getTranslation = sinon.spy();
+      });
+
+      after(function(){
+        a.getTranslation = getTranslationSrc;
+      });
+
+      it('should have getAsyncTranslation function', function() {
+        expect(a).to.have.property('getAsyncTranslation');
+        expect(a.getAsyncTranslation).to.be.a('Function');
+      });
+
+      it('should call once to getTranslation with the same msgId', function(done) {
+        a.getAsyncTranslation('simple-element-info').then(function(){
+          expect(a.getTranslation).to.have.been.calledWith('simple-element-info').once;
+          done();
+        });
+      });
+
+      it('should call once to getTranslation with the same interpolated msgId', function(done) {
+        a.getAsyncTranslation('simple-element-interpolated', {interpolated: 'interpolated'}).then(function(){
+          expect(a.getTranslation).to.have.been.calledWith('simple-element-interpolated').once;
+          done();
+        });
+      });
+
+      it('should....', function(done) {
+        window.I18nMsg.locales = {};
+        i18.getAsyncTranslation('simple-element-info').then(function(msg) {
+          expect(msg).to.be.equal('Informacion');
+          done();
+        });
+
+        window.I18nMsg.lang = 'es';
+
+      });
+    });
+
+    describe('I18nMsg Object on window', function() {
+      var getCurrentLocaleSrc;
+      before(function(){
+        getCurrentLocaleSrc = window.I18nMsg.getCurrentLocale;
+        window.I18nMsg.getCurrentLocale = sinon.spy();
+      });
+
+      after(function(){
+        window.I18nMsg.getCurrentLocale = getCurrentLocaleSrc;
+      });
+
+      it('should have lang property', function() {
+        expect(window.I18nMsg.lang).to.not.be.undefined;
+      });
+
+      it('should have default url pointing to locales/', function() {
+        expect(window.I18nMsg.url).to.be.equal('locales/');
+      });
+
+      it('should have locales property', function() {
+        expect(window.I18nMsg.locales).to.not.be.undefined;
+      });
+
+      it('should have currentLocale property', function() {
+        expect(window.I18nMsg.currentLocale).to.not.be.undefined;
+      });
+    });
+  });
+  </script>
+</body>
+</html>

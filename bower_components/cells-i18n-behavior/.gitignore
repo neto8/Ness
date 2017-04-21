@@ -1,0 +1,7 @@
+bower_components
+components
+node_modules
+
+cells.log
+coverage*
+test-reports
