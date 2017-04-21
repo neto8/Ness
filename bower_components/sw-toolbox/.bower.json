@@ -1,0 +1,20 @@
+{
+  "name": "sw-toolbox",
+  "main": "sw-toolbox.js",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "Apache-2.0",
+  "ignore": [
+    "**/.*",
+    "lib",
+    "tests",
+    "docs",
+    "gulpfile.js"
+  ],
+  "_source": "art://GoogleChrome/sw-toolbox",
+  "_target": "^3.1.1",
+  "_release": "v3.6.1",
+  "version": "3.6.1",
+  "_originalSource": "sw-toolbox"
+}

@@ -1,0 +1,106 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu-light.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-item/paper-item.html">
+
+<!--
+`<cells-demo-lang-switcher>` is a dropdown menu
+that changes the language of a component, which uses `CellsBehaviors.i18nBehavior`
+
+
+Examples:
+
+__With default configuration:__
+```
+<cells-demo-lang-switcher></cells-demo-lang-switcher>
+```
+
+__With custom label, path to locales and langs:__
+```
+<cells-demo-lang-switcher
+  label="Idioma"
+  locales-path="custom-path-to-locales"
+  langs='["en","es","de","fr"]'>
+</cells-demo-lang-switcher>
+```
+
+@demo demo/index.html
+@hero cells-demo-lang-switcher.jpg
+-->
+<dom-module id="cells-demo-lang-switcher">
+  <template>
+    <style>
+      :host { display: block; }
+      paper-dropdown-menu-light {
+        width: 100px;
+        margin: 0.5rem;
+        --paper-dropdown-menu-button: {
+          padding: 0 0.5rem;
+          height:60px;
+          background-color:var(--paper-dropdown-menu-button-bg-color, #F4F4F4);
+        };
+        --paper-dropdown-menu-input: {
+          /*padding: 0.5 0.5rem;*/
+          border-bottom: 0;
+        };
+        --paper-input-container-label: {
+          padding:.5rem 0.5rem;
+          color: var(--paper-input-container-label-color, #666);
+        };
+        --paper-input-container-label-focus: {
+          color: var(--paper-input-container-label-focus-color, #666);
+        };
+        --paper-input-container-input: {
+          color: var(--paper-input-container-input-color, #121212);
+        };
+        --paper-input-container-underline: {
+          display: none;
+        };
+        --paper-input-container-underline-focus: {
+          display:none;
+        };
+        --paper-dropdown-menu-focus-color: {
+          display:none;
+        }
+      }
+      paper-listbox {
+        width: 100px;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        --paper-listbox: {
+          margin-top:-12px;
+          padding: 0;
+          background-color:var(--paper-listbox-bg-color, #F4F4F4);
+          width:200px;
+          position:fixed;
+        };
+      }
+      paper-item {
+        --paper-item: {
+          color: var(--paper-item-color, #666);
+          margin: 0 0.5rem;
+          border-top: 1px solid #D3D3D3;
+          cursor:pointer;
+        };
+        --paper-item-focused: {
+          color: var(--paper-item-focused-color, #121212);
+          font-weight: normal;
+          background:transparent;
+        };
+        --paper-item-focused-before: {
+          background:transparent;
+        };
+      }
+    </style>
+
+    <paper-dropdown-menu-light label="[[label]]" noink no-animations horizontal-align="left" vertical-align="bottom" dynamic-align>
+      <paper-listbox class="dropdown-content" selected="{{selected}}">
+        <template is="dom-repeat" items="[[langs]]">
+          <paper-item>[[item]]</paper-item>
+        </template>
+      </paper-listbox>
+    </paper-dropdown-menu-light>
+  </template>
+  <script src="cells-demo-lang-switcher.js"></script>
+</dom-module>

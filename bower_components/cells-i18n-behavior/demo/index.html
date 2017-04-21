@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes" name="viewport">
+    <title>i18n-msg-behavior Demo</title>
+    <link rel="stylesheet" href="demo.css">
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="demo-i18n-component.html">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="frame">
+      <div class="lang-selector">
+        <label for="lang">Toggle language:</label>
+        <select id="lang">
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+          <option value="unknown" selected>Unknown</option>
+        </select>
+      </div>
+      <demo-i18n-component></demo-i18n-component>
+    </div>
+  </body>
+
+  <script>
+    document.documentElement.lang = 'unknown'; //show keys at the very start of demo
+    document.addEventListener('HTMLImportsLoaded', function() {
+      I18nMsg.lang = document.documentElement.lang;
+      I18nMsg.url = 'locales';
+    });
+
+    var langSelector = document.getElementById('lang');
+    langSelector.addEventListener('change', function() {
+      document.documentElement.lang = this.value;
+      I18nMsg.lang = document.documentElement.lang;
+    });
+  </script>
+
+</html>

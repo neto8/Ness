@@ -1,0 +1,106 @@
+@import "bower_components/cells-sass/main";
+@import "scss/devices";
+@import "scss/style";
+
+
+.wrapper {
+  width: 100%;
+  padding: 40px 0;
+}
+
+.selectors{
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  background: white;
+  padding: 5px 10px;
+  height: 60px;
+  overflow: hidden;
+
+  p {
+    padding: 13px 10px;
+  }
+
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 5px 10px;
+    border-radius: 0;
+    font-size: 9pt;
+    color: #848484;
+    border: 1px solid #848484;
+    background-color: white;
+  }
+}
+
+.screen.cells-demo-mobile {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.pull-right {
+  margin-left: auto;
+}
+
+paper-dropdown-menu, .lang paper-dropdown-menu-light {
+  margin: 0 0.5rem;
+      height:60px;
+    --paper-dropdown-menu-button: unquote("{
+      background-color:var(--paper-dropdown-menu-button-bg-color, #F4F4F4);
+      width:200px;
+    }");
+    --paper-dropdown-menu-input: unquote("{
+      padding: 0 0.5rem;
+    }");
+    --paper-input-container-label: unquote("{
+      padding:0;
+      color: var(--paper-input-container-label-color, #666);
+    }");
+    --paper-input-container-label-focus: unquote("{
+      color: var(--paper-input-container-label-focus-color, #666);
+    }");
+    --paper-input-container-input: unquote("{
+      color: var(--paper-input-container-input-color, #121212);
+    }");
+    --paper-input-container-underline: unquote("{
+      display: none;
+    }");
+    --paper-input-container-underline-focus: unquote("{
+      display:none;
+    }");
+    }
+
+  paper-listbox, .lang paper-dropdown-menu-light {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    --paper-listbox: unquote("{
+      margin-top:-12px;
+      padding: 0;
+      background-color:var(--paper-listbox-bg-color, #F4F4F4);
+      width:200px;
+      position:fixed;
+    }");
+  }
+
+  paper-item, .lang paper-dropdown-menu-light {
+    --paper-item: unquote("{
+      color: var(--paper-item-color, #666);
+      margin: 0 0.5rem;
+      border-top: 1px solid #D3D3D3;
+      cursor:pointer;
+    }");
+    --paper-item-focused: unquote("{
+      color: var(--paper-item-focused-color, #121212);
+      font-weight: normal;
+      background:transparent;
+    }");
+    --paper-item-focused-before: unquote("{
+      background:transparent;
+    }");
+  }
+
+  :host {
+    @apply(--cells-demo-mobile);
+  }
